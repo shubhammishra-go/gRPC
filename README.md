@@ -72,11 +72,12 @@ The main purpose of an RPC is to allow a local computer (client) to invoke proce
 
 
 
-
 # About Protocol buffers
 
 Protocol Buffers (`Protobuf`) is a free and open-source cross-platform data format used to serialize structured data. It is useful in developing programs that communicate with each other over a network or for storing data.
-The method involves an `interface description language` that describes the structure of some data and a program that generates source code from that description for generating or parsing a stream of bytes that represents the structured data. 
+The method involves an `interface description language` that describes the structure of some data and a program that generates source code from that description for generating or parsing a stream of bytes that represents the structured data.
+
+![alt text](unnamed-1.png)
 
 //About Interface Description Language
 
@@ -85,8 +86,45 @@ An interface description language or interface definition language (IDL) is a ge
 IDLs are commonly used in `remote procedure call software`. In these cases the machines at either end of the link may be using different operating systems and computer languages. IDLs offer a bridge between the two different systems. 
 
 
+The definition of data to be serialized is written in configuration files called `proto files` with the extension `.proto`. These files contain the configuration known as messages.
 
-Will update everything about gRPC soon...
+
+// features of proto files
+
+`Binary transfer format` The data is transmitted as binary. This improves the speed of transmission more than raw string because it takes less space and bandwidth.
+
+`Separation of context and data` In JSON and XML, the data in context are not separable, whereas in Protobuf, it is separable.
+
+
+`Message format` the data is transmitted as Protobuf based on a configuration file known as `messages`.
+
+
+# types in Proto file
+
+`syntax` syntax keyword used to version of proto file. like `syntax = "proto3";`
+
+`message` keyword used to define user defined data types that consists collection of different fields. like class,struct,object.
+
+
+
+
+# Writing Protocol Buffer
+
+
+```proto
+
+syntax = "proto3";
+
+message SearchRequest {
+  string query = 1;
+  int32 page_number = 2;
+  int32 results_per_page = 3;
+}
+
+
+
+```
+
 
 
 
@@ -135,7 +173,8 @@ This is one of the issues GraphQL was designed to solve. It’s particularly imp
 
 # References
 
+`https://book.systemsapproach.org/e2e/rpc.html`
+
 `https://www.javatpoint.com/what-is-rpc-in-operating-system`
 
-`https://book.systemsapproach.org/e2e/rpc.html`
 
