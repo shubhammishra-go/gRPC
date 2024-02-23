@@ -86,6 +86,10 @@ IDLs are commonly used in `remote procedure call software`. In these cases the m
 
 
 
+...
+
+
+
 
 # gRPC vs GraphQL
 
@@ -116,7 +120,19 @@ there is no standard way to know whether a method will mutate state in gRPC. whi
 This is one of the issues GraphQL was designed to solve. It’s particularly important over high-latency mobile phone connections to be able to get all the data you need in a single request. In GraphQL, we send a string (called a document) with our request that includes all the methods (called queries and mutations) we want to call and all the nested data we need based on the first-level results. Some of the nested data may require subsequent requests from the server to the database, but they’re usually located in the same data center, which should have sub-millisecond network latency.
 
 
-# Ref
+
+# Why not RPC?
+
+The client and server use different execution environments for their respective routines, and the use of resources (e.g., files) is also more `complex`. Consequently, RPC systems aren't always suited for transferring large amounts of data.
+
+RPC is highly `vulnerable` to failure because it involves a communication system, another machine and another process.
+There is no uniform standard for RPC; it can be implemented in a variety of ways.
+
+RPC is only interaction-based, and as such, it doesn't offer any `flexibility` when it comes to hardware architecture.
+
+some more disadvantages also discussed above in comparasion with GraphQL.
+
+# References
 
 `https://www.javatpoint.com/what-is-rpc-in-operating-system`
 
