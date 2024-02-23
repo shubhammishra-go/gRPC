@@ -9,7 +9,7 @@ In `March 2015`, Google decided to build the next version of Stubby and make it 
 It uses `HTTP/2` for transport, `Protocol Buffers` as the `interface description language`, and provides features such as authentication, `bidirectional streaming` and flow control, blocking or nonblocking bindings, and cancellation and timeouts. It generates cross-platform client and server bindings for many languages. Most common usage scenarios include connecting services in a microservices style architecture, or connecting mobile device clients to backend services.
 
 
-![alt text](grpc-icon-color.png)
+![alt text](image-1.png)
 
 
 # About RPC 
