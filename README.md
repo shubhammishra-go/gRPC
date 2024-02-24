@@ -103,27 +103,130 @@ The definition of data to be serialized is written in configuration files called
 
 `syntax` syntax keyword used to version of proto file. like `syntax = "proto3";`
 
-`message` keyword used to define user defined data types that consists collection of different fields. like class,struct,object.
+`message` keyword used to define user defined data types that consists collection of different fields(name/value pairs). like class,struct,object.
+
+```proto 
+message SearchRequest {
+  string query = 1;
+  int32 page_number = 2;
+  int32 results_per_page = 3;
+}
+```
+
+`package` keyword used to add some other `.proto ` files in your current proto file.
+
+for example :  `import "google/protobuf/descriptor.proto";`
+
+`Field Numbers` You must give each field in your message definition a number between `1` and `536,870,911`.
+
+The given number must be `unique` among all fields for that message.
+
+Field numbers `19,000 to 19,999 are reserved` for the Protocol Buffers implementation. The protocol buffer compiler will complain if you use one of these reserved field numbers in your message.
+
+You cannot use any previously reserved field numbers or any field numbers that have been allocated to `extensions`.
+
+![alt text](image-2.png)
+
+
+`service` keyword used to define RPC service interface just like Query , Mutation types used in GraphQL.
+
+If you want to use your message types with an RPC (Remote Procedure Call) system, you can define an RPC service interface in a .proto file and the protocol buffer compiler will generate service interface code and stubs in your chosen language. So, for example, if you want to define an RPC service with a method that takes your `SearchRequest` and returns a `SearchResponse`, you can define it in your .proto file as follows:
+
+```proto 
+service SearchService {
+  rpc Search(SearchRequest) returns (SearchResponse);
+}
+```
+
+
+//Specifying Field Labels 
+
+`optional` The field is set, and contains a value that was explicitly set or parsed from the wire. It will be serialized to the wire.
+The field is unset, and will return the default value. It will not be serialized to the wire.
+
+`repeated` This field type can be repeated zero or more times in a well-formed message. The order of the repeated values will be preserved.
+
+`map` this is a paired key/value field type.  like `map<string, Project> projects = 3;`
+
+![alt text](image-3.png)
+
+
+//Comment
+
+To add comments to your .proto files, use C/C++-style `//` and `/* ... */` syntax.
+
+
+# Data types in Proto 3
+
+//Scalar Value Types
+
+A scalar message field can have one of the following types – the table shows the type specified in the .proto file, and the corresponding type in the automatically generated class:
+
+![alt text](image-4.png)
+
+
+// Default Values
+
+When a message is parsed, if the encoded message does not contain a particular implicit presence element, accessing the corresponding field in the parsed object returns the default value for that field. These defaults are type-specific:
+
+    For strings, the default value is the empty string.
+    For bytes, the default value is empty bytes.
+    For bools, the default value is false.
+    For numeric types, the default value is zero.
+    For enums, the default value is the first defined enum value, which must be 0.
+    For message fields, the field is not set. Its exact value is language-dependent. See the generated code guide for details.
+
+The default value for repeated fields is empty (generally an empty list in the appropriate language).
+
+
+// Enumerations 
+
+When you’re defining a message type, you might want one of its fields to only have one of a predefined list of values. For example, let’s say you want to add a `corpus` field for each `SearchRequest`, where the corpus can be `UNIVERSAL`, `WEB`, `IMAGES`, `LOCAL`, `NEWS`, `PRODUCTS` or `VIDEO`. You can do this very simply by adding an enum to your message definition with a constant for each possible value.
+
+In the following example we’ve added an enum called Corpus with all the possible values, and a field of type `Corpus`:
+
+
+```proto 
+enum Corpus {
+  CORPUS_UNSPECIFIED = 0;
+  CORPUS_UNIVERSAL = 1;
+  CORPUS_WEB = 2;
+  CORPUS_IMAGES = 3;
+  CORPUS_LOCAL = 4;
+  CORPUS_NEWS = 5;
+  CORPUS_PRODUCTS = 6;
+  CORPUS_VIDEO = 7;
+}
+
+message SearchRequest {
+  string query = 1;
+  int32 page_number = 2;
+  int32 results_per_page = 3;
+  Corpus corpus = 4;
+}
+```
+
+As you can see, the Corpus enum’s first constant maps to zero: every enum definition must contain a constant that maps to zero as its first element. This is because:
+
+There must be a zero value, so that we can use 0 as a numeric default value.
+The zero value needs to be the first element, for compatibility with the proto2 semantics where the first enum value is the default unless a different value is explicitly specified
+
+
+
+//Nested Types 
+
+...
+
+
+//Oneof 
+
+...
 
 
 
 
 # Writing Protocol Buffer
 
-
-```proto
-
-syntax = "proto3";
-
-message SearchRequest {
-  string query = 1;
-  int32 page_number = 2;
-  int32 results_per_page = 3;
-}
-
-
-
-```
 
 
 
@@ -172,6 +275,9 @@ This is one of the issues GraphQL was designed to solve. It’s particularly imp
 
 
 # References
+
+
+`https://protobuf.dev/`
 
 `https://book.systemsapproach.org/e2e/rpc.html`
 
