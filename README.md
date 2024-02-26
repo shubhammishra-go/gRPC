@@ -4,7 +4,7 @@ gRPC is a cross-platform open source high performance remote procedure call (`RP
 
 it was initially created by Google, which used a single general-purpose RPC infrastructure called `Stubby` to connect the large number of `microservices` running within and across its data centers from about `2001`.
 
-In `March 2015`, Google decided to build the next version of Stubby and make it open source. The result was gRPC, which is now used in many organizations aside from Google to power use cases from microservices to the "last mile" of computing (mobile, web, and Internet of Things).
+In `March 2015`, Google decided to build the next version of Stubby and make it open source. The result was gRPC, which is now used in many organizations aside from Google to power use cases from microservices to the "last mile" of computing (mobile, web, and Internet of Things). now it is part of `CNCF [cloud native computing foundation]`
 
 It uses `HTTP/2` for transport, `Protocol Buffers` as the `interface description language`, and provides features such as authentication, `bidirectional streaming` and flow control, blocking or nonblocking bindings, and cancellation and timeouts. It generates cross-platform client and server bindings for many languages. Most common usage scenarios include connecting services in a microservices style architecture, or connecting mobile device clients to backend services.
 
@@ -41,6 +41,8 @@ The client runtime program has the knowledge of how to address the remote comput
 When a remote procedure call is invoked, the calling environment is suspended, the procedure parameters are transferred across the network to the environment where the procedure is to execute, and the procedure is then executed in that environment.
 
 When the procedure finishes, the results are transferred back to the calling environment, where execution resumes as if returning from a regular procedure call.
+
+see the `gRPC T1` directory code
 
 During an RPC, the following steps take place:
 
@@ -231,6 +233,21 @@ The zero value needs to be the first element, for compatibility with the proto2 
 
 
 
+# How gRPC works?
+
+first you write protocol buffer files {`.proto` files} than you generate code from your written protobuf code in any langauge.
+
+after generating language code that you write logic for your schema proto file in that language.
+
+once logic implemented than you define client side logic from where you can use those functions {services}.
+
+after client logic done! you start your server. now you can use those services. 
+
+`as we can use some functionality from client by invoking functions that is why it is called as remote procedure calls`
+
+see the  `gRPC T2` where i implemented add and multiply logic  
+
+
 
 # Why not RPC?
 
@@ -273,14 +290,24 @@ there is no standard way to know whether a method will mutate state in gRPC. whi
 This is one of the issues GraphQL was designed to solve. It’s particularly important over high-latency mobile phone connections to be able to get all the data you need in a single request. In GraphQL, we send a string (called a document) with our request that includes all the methods (called queries and mutations) we want to call and all the nested data we need based on the first-level results. Some of the nested data may require subsequent requests from the server to the database, but they’re usually located in the same data center, which should have sub-millisecond network latency.
 
 
+# Why gRPC ?
+
+there are many reasons to use gRPC some of them are compared above with GraphQL.
+
+`Communication between different languages` backend/frontend may be written in differnet languages. gRPC makes it easy to communicate between various microservices.
+
+`Communication should be efficient` gRPC uses Http/2 and protobuf which makes communication between microservices so fast.
+
+
 
 # References
 
+`https://grpc.io`
 
 `https://protobuf.dev/`
+
+`https://en.wikipedia.org/wiki/HTTP/2`
 
 `https://book.systemsapproach.org/e2e/rpc.html`
 
 `https://www.javatpoint.com/what-is-rpc-in-operating-system`
-
-
