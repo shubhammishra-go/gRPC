@@ -227,11 +227,27 @@ The zero value needs to be the first element, for compatibility with the proto2 
 
 
 
-# Writing Protocol Buffer
+# Writing A Protocol Buffer [protobuf file]
+
+...
 
 
+# To Generate Go Code from Protobuf
+
+here we will generate go code from `.proto` files
+
+please make attention to 3 points here 
+
+protoc --go_out=`.` --go_opt=paths=source_relative --go-grpc_out=`.` --go-grpc_opt=paths=source_relative `protofiles/*.proto`
+
+nowdayas grpc generate 2 go file code for `.proto` files so to locate those go code files we specfied the `.` location from where `.proto` files are located it will generate go code there itself.
+
+`protofiles/*.proto` this means compile all `.proto` files from protofiles directory.
 
 
+``` bash
+protoc --go_out=. --go_opt=paths=source_relative --go-grpc_out=. --go-grpc_opt=paths=source_relative protofiles/*.proto
+```
 
 # How gRPC works?
 
