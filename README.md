@@ -9,8 +9,7 @@ In `March 2015`, Google decided to build the next version of Stubby and make it 
 It uses `HTTP/2` for transport, `Protocol Buffers` as the `interface description language`, and provides features such as authentication, `bidirectional streaming` and flow control, blocking or nonblocking bindings, and cancellation and timeouts. It generates cross-platform client and server bindings for many languages. Most common usage scenarios include connecting services in a microservices style architecture, or connecting mobile device clients to backend services.
 
 
-![alt text](image-1.png)
-
+![alt text](what-is-grpc.jpg)
 
 # About RPC 
 
@@ -378,6 +377,45 @@ gRPC clients and servers can run and talk to each other in a variety of environm
 
 
 
+# About Deadlines/Timeouts 
+
+gRPC allows clients to specify how long they are willing to wait for an RPC to complete before the RPC is terminated with a `DEADLINE_EXCEEDED` error. On the server side, the server can query to see if a particular RPC has timed out, or how much time is left to complete the RPC.
+
+Specifying a deadline or timeout is `language specific`: some language APIs work in terms of timeouts (durations of time), and some language APIs work in terms of a deadline (a fixed point in time) and may or may not have a default deadline.
+
+
+
+# About RPC termination 
+
+In gRPC, both the client and server make independent and local determinations of the success of the call, and their conclusions may not match. This means that, for example, you could have an RPC that finishes successfully on the server side (“I have sent all my responses!”) but fails on the client side (“The responses arrived after my deadline!”). It’s also possible for a server to decide to complete before a client has sent all its requests.
+
+
+# Cancelling an RPC 
+
+Either the client or the server can cancel an RPC at any time. A cancellation terminates the RPC immediately so that no further work is done.
+
+`Note` Changes made before a cancellation are not rolled back.
+
+
+# About Metadata in gRPC
+
+Metadata is information about a particular RPC call (such as `authentication details`) in the form of a list of key-value pairs, where the keys are strings and the values are typically strings, but can be binary data.
+
+Keys are case insensitive and consist of `ASCII letters`, `digits`, and special characters `-`, `_`, `.` and must not start with `grpc-` (which is reserved for gRPC itself). Binary-valued keys end in `-bin` while ASCII-valued keys do not.
+
+User-defined metadata is not used by gRPC, which allows the client to provide information associated with the call to the server and vice versa.
+
+Access to metadata is language dependent.
+
+
+
+# Channels 
+
+A gRPC channel provides a connection to a gRPC server on a specified host and port. It is used when creating a `client stub`. Clients can specify channel arguments to modify gRPC’s default behavior, such as switching message compression on or off. A channel has state, including connected and idle.
+
+How gRPC deals with closing a channel is language dependent. Some languages also permit querying channel state.
+
+
 # Why not RPC?
 
 The client and server use different execution environments for their respective routines, and the use of resources (e.g., files) is also more `complex`. Consequently, RPC systems aren't always suited for transferring large amounts of data.
@@ -393,6 +431,8 @@ some more disadvantages also discussed below in comparasion with GraphQL.
 # gRPC vs GraphQL
 
 Here we will compare gRPC and GraphQL in terms of some parameters...
+
+![alt text](gRPC-vs-GraphQL.jpg)
 
 `Payload` ::: Message size matters because smaller messages generally take less time to send over the network. gRPC uses `protocol buffers` (a.k.a. protobufs), a `binary format` that just includes values, while GraphQL uses JSON, which is text-based and includes field names in addition to values. The binary format combined with less information sent generally results in gRPC messages being smaller than GraphQL messages. (While an efficient binary format is feasible in GraphQL, it’s rarely used and isn’t supported by most of the libraries and tooling.) 
 gRPC’s binary format is faster `serializing` and parsing of messages compared to that of GraphQL’s text messages. The downside is that it’s harder to view and debug than the human-readable JSON.
@@ -427,6 +467,7 @@ there are many reasons to use gRPC some of them are compared above with GraphQL.
 
 `Communication should be efficient` gRPC uses Http/2 and protobuf which makes communication between microservices so fast.
 
+![alt text](image-1.png)
 
 
 # References
