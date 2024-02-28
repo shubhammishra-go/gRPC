@@ -1,6 +1,8 @@
 # gRPC
 
-gRPC is a cross-platform open source high performance remote procedure call (`RPC`) `framework`.
+gRPC is a modern open source high performance `Remote Procedure Call (RPC)` `framework` that can run in any environment. It can efficiently connect services in and across data centers with pluggable support for load balancing, tracing, health checking and authentication. It is also applicable in last mile of distributed computing to connect devices, mobile applications and browsers to backend services.
+
+![alt text](what-is-grpc.jpg)
 
 it was initially created by Google, which used a single general-purpose RPC infrastructure called `Stubby` to connect the large number of `microservices` running within and across its data centers from about `2001`.
 
@@ -8,8 +10,6 @@ In `March 2015`, Google decided to build the next version of Stubby and make it 
 
 It uses `HTTP/2` for transport, `Protocol Buffers` as the `interface description language`, and provides features such as authentication, `bidirectional streaming` and flow control, blocking or nonblocking bindings, and cancellation and timeouts. It generates cross-platform client and server bindings for many languages. Most common usage scenarios include connecting services in a microservices style architecture, or connecting mobile device clients to backend services.
 
-
-![alt text](what-is-grpc.jpg)
 
 # About RPC 
 
